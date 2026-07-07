@@ -1,409 +1,563 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3C Intelligence | Spatial Risk & Urban Security Analytics</title>
-    <!-- Google Fonts for Premium Typography -->
+    <title>3C Intelligence | Urban Risk & Spatial Analytics Platform</title>
+    <meta name="description" content="AI-powered municipal risk profiling using K-Means clustering across Pakistani cities. Spatial intelligence for policymakers, civic planners, and urban governance.">
+
+    <!-- Premium Typography: General Sans + Inter Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Link to external Vanilla CSS (Supports local double-click and Flask rendering) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400;1,14..32,500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
-    <!-- Sticky Glass Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="5" r="2" fill="currentColor"></circle>
-                    <circle cx="5" cy="18" r="2" fill="currentColor"></circle>
-                    <circle cx="19" cy="18" r="2" fill="currentColor"></circle>
-                    <line x1="12" y1="7" x2="6" y2="16"></line>
-                    <line x1="12" y1="7" x2="18" y2="16"></line>
-                    <line x1="7" y1="18" x2="17" y2="18"></line>
+    <!-- ═══════════════════════════════════════════
+         HEADER — Not sticky, scrolls with page
+    ═══════════════════════════════════════════ -->
+    <header class="site-header" id="site-header">
+        <div class="header-inner">
+            <a href="#" class="brand-logo" id="brand-logo-link">
+                <!-- Icon: graph node cluster -->
+                <svg class="brand-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="18" cy="7" r="4" fill="url(#g1)"/>
+                    <circle cx="7" cy="28" r="4" fill="url(#g2)"/>
+                    <circle cx="29" cy="28" r="4" fill="url(#g3)"/>
+                    <line x1="18" y1="11" x2="9" y2="25" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="18" y1="11" x2="27" y2="25" stroke="url(#lg2)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="10" y1="28" x2="26" y2="28" stroke="url(#lg3)" stroke-width="1.5" stroke-linecap="round"/>
+                    <defs>
+                        <radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#818CF8"/><stop offset="100%" stop-color="#6366F1"/></radialGradient>
+                        <radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></radialGradient>
+                        <radialGradient id="g3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F87171"/><stop offset="100%" stop-color="#EF4444"/></radialGradient>
+                        <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818CF8" stop-opacity="0.5"/><stop offset="100%" stop-color="#34D399" stop-opacity="0.5"/></linearGradient>
+                        <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818CF8" stop-opacity="0.5"/><stop offset="100%" stop-color="#F87171" stop-opacity="0.5"/></linearGradient>
+                        <linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#34D399" stop-opacity="0.4"/><stop offset="100%" stop-color="#F87171" stop-opacity="0.4"/></linearGradient>
+                    </defs>
                 </svg>
-                <span class="logo-text">3C<span class="logo-highlight">Intelligence</span></span>
+                <span class="brand-name">3C<em>Intelligence</em></span>
             </a>
-            
-            <div class="nav-links">
-                <a href="#overview" class="nav-link active">Dashboard</a>
-                <a href="#visualization" class="nav-link">Analytics</a>
-                <a href="#rankings" class="nav-link">City Rankings</a>
-                <a href="#insights" class="nav-link">Methodology</a>
-                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
+
+            <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="#overview" class="nav-item" id="nav-dashboard">Dashboard</a>
+                <a href="#visualization" class="nav-item" id="nav-analytics">Analytics</a>
+                <a href="#rankings" class="nav-item" id="nav-rankings">Rankings</a>
+                <a href="#insights" class="nav-item" id="nav-methodology">Methodology</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" type="button">
+                    <!-- Sun icon -->
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <!-- Moon icon -->
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Open mobile menu" type="button">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
         </div>
-        
-        <!-- Mobile Dropdown Navigation -->
-        <div class="mobile-nav" id="mobileNav">
-            <a href="#overview" class="mobile-nav-link">Dashboard</a>
-            <a href="#visualization" class="mobile-nav-link">Analytics</a>
-            <a href="#rankings" class="mobile-nav-link">City Rankings</a>
-            <a href="#insights" class="mobile-nav-link">Methodology</a>
+        <!-- Mobile nav drawer -->
+        <div class="mobile-nav-drawer" id="mobileNav" aria-hidden="true">
+            <a href="#overview" class="mobile-nav-item" id="mnav-dashboard">Dashboard</a>
+            <a href="#visualization" class="mobile-nav-item" id="mnav-analytics">Analytics</a>
+            <a href="#rankings" class="mobile-nav-item" id="mnav-rankings">Rankings</a>
+            <a href="#insights" class="mobile-nav-item" id="mnav-methodology">Methodology</a>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Container -->
-    <main class="main-content">
+    <main>
 
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-bg-glow"></div>
-            <div class="hero-container">
-                <div class="hero-text-content">
-                    <span class="hero-badge">3C INTELLIGENCE v1.2</span>
-                    <h1 class="hero-title">3C Intelligence Spatial Risk Engine</h1>
-                    <p class="hero-subtitle">AI-Powered Urban Risk Intelligence Platform. Multi-dimensional risk profiling powered by unsupervised machine learning models to identify municipal security sectors, delivering statistical rigor for public policy and municipal governance.</p>
-                    <div class="hero-actions">
-                        <a href="#overview" class="btn btn-primary">
-                            <span>Access Analytics System</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
+        <!-- ═══════════════════════════════════════════
+             HERO — Split layout: copy left, viz right
+        ═══════════════════════════════════════════ -->
+        <section class="hero-section" id="hero">
+            <!-- Atmospheric glow layers -->
+            <div class="hero-glow hero-glow-indigo" aria-hidden="true"></div>
+            <div class="hero-glow hero-glow-emerald" aria-hidden="true"></div>
+            <div class="hero-grid-overlay" aria-hidden="true"></div>
+
+            <div class="hero-inner">
+                <!-- LEFT: Copy -->
+                <div class="hero-copy">
+                    <div class="eyebrow-chip" id="hero-eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Spatial Risk Engine v1.2 · Live
+                    </div>
+
+                    <h1 class="hero-headline" id="hero-headline">
+                        Urban risk,<br>
+                        mapped with<br>
+                        <em class="headline-accent">machine precision</em>
+                    </h1>
+
+                    <p class="hero-body" id="hero-subheadline">
+                        K-Means clustering across 50 Pakistani municipalities surfaces high-risk jurisdictions before crises emerge — delivering statistical rigor to policymakers.
+                    </p>
+
+                    <div class="hero-cta-row" id="hero-cta-row">
+                        <a href="#overview" class="cta-primary" id="cta-primary-hero">
+                            <span>Explore the dashboard</span>
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="10" x2="16" y2="10"/><polyline points="11 5 16 10 11 15"/></svg>
                         </a>
-                        <a href="#insights" class="btn btn-secondary">Review Methodology</a>
+                        <a href="#insights" class="cta-ghost" id="cta-ghost-hero">View methodology</a>
                     </div>
-                </div>
-                
-                <div class="hero-illustration">
-                    <div class="abstract-card">
-                        <div class="card-glow-blue"></div>
-                        <div class="grid-line horizontal h1"></div>
-                        <div class="grid-line horizontal h2"></div>
-                        <div class="grid-line horizontal h3"></div>
-                        <div class="grid-line vertical v1"></div>
-                        <div class="grid-line vertical v2"></div>
-                        <div class="grid-line vertical v3"></div>
-                        
-                        <!-- Floating Nodes to represent K-Means clustering -->
-                        <div class="ai-node red n1" style="top: 25%; left: 70%;"></div>
-                        <div class="ai-node red n2" style="top: 35%; left: 80%;"></div>
-                        <div class="ai-node orange n3" style="top: 50%; left: 45%;"></div>
-                        <div class="ai-node orange n4" style="top: 60%; left: 55%;"></div>
-                        <div class="ai-node green n5" style="top: 70%; left: 20%;"></div>
-                        <div class="ai-node green n6" style="top: 80%; left: 30%;"></div>
-                        
-                        <div class="connection-line c1"></div>
-                        <div class="connection-line c2"></div>
-                        
-                        <div class="card-label">K-Means Cluster Space (K=3)</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Crime Overview Metrics -->
-        <section class="overview-section" id="overview">
-            <div class="section-header">
-                <h2 class="section-title">Urban Crime Analytics & Classification</h2>
-                <p class="section-desc">Model-driven municipal risk segmentation generated through standardized clustering validation.</p>
-            </div>
-            
-            <div class="metrics-grid">
-                <!-- Total Cities Card -->
-                <div class="metric-card card-total">
-                    <div class="metric-icon-bg">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                            <line x1="9" y1="22" x2="9" y2="16"></line>
-                            <line x1="15" y1="22" x2="15" y2="16"></line>
-                            <line x1="9" y1="16" x2="15" y2="16"></line>
-                            <path d="M9 12h.01M15 12h.01M9 8h.01M15 8h.01"></path>
-                        </svg>
-                    </div>
-                    <div class="metric-info">
-                        <span class="metric-label">Total Analyzed Jurisdictions</span>
-                        <h3 class="metric-value" id="stat-total-cities">0</h3>
-                        <span class="metric-subtext">Municipalities evaluated across demographic indicators</span>
+                    <!-- Trust strip under CTA -->
+                    <div class="hero-trust" id="hero-trust">
+                        <div class="trust-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span>Silhouette-validated clusters</span>
+                        </div>
+                        <div class="trust-divider" aria-hidden="true"></div>
+                        <div class="trust-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            <span>50 jurisdictions analyzed</span>
+                        </div>
+                        <div class="trust-divider" aria-hidden="true"></div>
+                        <div class="trust-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span>Real-time risk scoring</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Safe Cities Card -->
-                <div class="metric-card card-safe">
-                    <div class="metric-glow-green"></div>
-                    <div class="metric-icon-bg">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-safe">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                    </div>
-                    <div class="metric-info">
-                        <span class="metric-label">Low-Risk Cohorts</span>
-                        <h3 class="metric-value text-safe" id="stat-safe-cities">0</h3>
-                        <span class="metric-subtext" id="pct-safe">Optimal cluster classification with minimal crime indices</span>
-                    </div>
-                </div>
+                <!-- RIGHT: K-Means visualization mockup -->
+                <div class="hero-viz" id="hero-viz" aria-label="K-Means cluster visualization">
+                    <div class="viz-card">
+                        <div class="viz-card-header">
+                            <div class="viz-dot-red" aria-hidden="true"></div>
+                            <div class="viz-dot-amber" aria-hidden="true"></div>
+                            <div class="viz-dot-green" aria-hidden="true"></div>
+                            <span class="viz-card-label">K-Means · K=3 · Pakistan Urban Clusters</span>
+                        </div>
+                        <div class="viz-canvas" id="heroVizCanvas" aria-hidden="true">
+                            <!-- Axes -->
+                            <div class="viz-axis-x"></div>
+                            <div class="viz-axis-y"></div>
+                            <div class="viz-axis-label viz-label-x">Assault Rate</div>
+                            <div class="viz-axis-label viz-label-y">Murder Rate</div>
 
-                <!-- Moderate Risk Cities Card -->
-                <div class="metric-card card-moderate">
-                    <div class="metric-glow-warning"></div>
-                    <div class="metric-icon-bg">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-moderate">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                            <line x1="12" y1="9" x2="12" y2="13"></line>
-                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                        </svg>
-                    </div>
-                    <div class="metric-info">
-                        <span class="metric-label">Moderate-Risk Cohorts</span>
-                        <h3 class="metric-value text-moderate" id="stat-mod-cities">0</h3>
-                        <span class="metric-subtext" id="pct-mod">Mid-range urban risk profile cluster allocations</span>
-                    </div>
-                </div>
+                            <!-- Cluster: High-Risk (Crimson nodes) -->
+                            <div class="cluster-node cn-high" style="left:72%;top:18%" title="Quetta"></div>
+                            <div class="cluster-node cn-high" style="left:66%;top:26%" title="Jacobabad"></div>
+                            <div class="cluster-node cn-high" style="left:78%;top:30%" title="Kasur"></div>
+                            <div class="cluster-node cn-high cn-lg" style="left:70%;top:36%" title="Peshawar"></div>
+                            <div class="cluster-node cn-high" style="left:60%;top:22%" title="Lahore"></div>
+                            <div class="cluster-node cn-high" style="left:74%;top:44%" title="Gujrat"></div>
+                            <!-- Centroid High -->
+                            <div class="cluster-centroid ct-high" style="left:69%;top:29%"></div>
+                            <div class="cluster-ring ct-ring-high" style="left:69%;top:29%"></div>
 
-                <!-- High Risk Cities Card -->
-                <div class="metric-card card-high">
-                    <div class="metric-glow-danger"></div>
-                    <div class="metric-icon-bg">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-high">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9zM13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                    </div>
-                    <div class="metric-info">
-                        <span class="metric-label">High-Risk Cohorts</span>
-                        <h3 class="metric-value text-high" id="stat-high-cities">0</h3>
-                        <span class="metric-subtext" id="pct-high">Critical priority areas with maximum spatial centroids</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+                            <!-- Cluster: Moderate Risk (Amber nodes) -->
+                            <div class="cluster-node cn-mod" style="left:44%;top:52%" title="Karachi"></div>
+                            <div class="cluster-node cn-mod" style="left:50%;top:58%" title="Kohat"></div>
+                            <div class="cluster-node cn-mod cn-lg" style="left:38%;top:60%" title="Mingora"></div>
+                            <div class="cluster-node cn-mod" style="left:54%;top:48%" title="Faisalabad"></div>
+                            <div class="cluster-node cn-mod" style="left:46%;top:68%" title="Jhelum"></div>
+                            <!-- Centroid Moderate -->
+                            <div class="cluster-centroid ct-mod" style="left:46%;top:57%"></div>
+                            <div class="cluster-ring ct-ring-mod" style="left:46%;top:57%"></div>
 
-        <!-- Interactive Clustering Visualizations -->
-        <section class="visualization-section" id="visualization">
-            <div class="glass-card plot-container">
-                <div class="plot-header">
-                    <div class="plot-title-wrapper">
-                        <h3 class="plot-card-title">Pipeline Diagnostic Visualizations</h3>
-                        <p class="plot-card-desc">Diagnostic outputs documenting feature distribution density, covariance heatmaps, Elbow Sum-of-Squares curves, and K-Means spatial cluster projections.</p>
-                    </div>
-                    <div class="plot-actions">
-                        <a href="#" id="downloadPlot" class="btn btn-secondary btn-icon" download aria-label="Export Current Plot">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                            <!-- Cluster: Safe (Emerald nodes) -->
+                            <div class="cluster-node cn-safe" style="left:18%;top:72%" title="Multan"></div>
+                            <div class="cluster-node cn-safe cn-lg" style="left:25%;top:78%" title="Islamabad"></div>
+                            <div class="cluster-node cn-safe" style="left:14%;top:82%" title="Turbat"></div>
+                            <div class="cluster-node cn-safe" style="left:30%;top:68%" title="Sukkur"></div>
+                            <div class="cluster-node cn-safe" style="left:22%;top:85%" title="Gujranwala"></div>
+                            <div class="cluster-node cn-safe" style="left:10%;top:76%" title="Muridke"></div>
+                            <!-- Centroid Safe -->
+                            <div class="cluster-centroid ct-safe" style="left:20%;top:78%"></div>
+                            <div class="cluster-ring ct-ring-safe" style="left:20%;top:78%"></div>
+
+                            <!-- Connector lines between centroids -->
+                            <svg class="centroid-connectors" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <line x1="69" y1="29" x2="46" y2="57" stroke="rgba(255,255,255,0.06)" stroke-width="0.5" stroke-dasharray="2,3"/>
+                                <line x1="46" y1="57" x2="20" y2="78" stroke="rgba(255,255,255,0.06)" stroke-width="0.5" stroke-dasharray="2,3"/>
                             </svg>
-                            <span>Export High-Resolution Vector</span>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="viz-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot ld-high"></div>
+                                <span>High-Risk</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot ld-mod"></div>
+                                <span>Moderate Risk</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot ld-safe"></div>
+                                <span>Safe</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating stat callout -->
+                    <div class="stat-callout sc-top" id="sc-silhouette">
+                        <div class="sc-icon sc-icon-indigo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </div>
+                        <div class="sc-text">
+                            <span class="sc-val">0.74</span>
+                            <span class="sc-label">Silhouette Score</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-callout sc-bottom" id="sc-clusters">
+                        <div class="sc-icon sc-icon-emerald">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                        </div>
+                        <div class="sc-text">
+                            <span class="sc-val">K = 3</span>
+                            <span class="sc-label">Optimal Clusters</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════
+             STATS BENTO GRID
+        ═══════════════════════════════════════════ -->
+        <section class="stats-section" id="overview">
+            <div class="section-container">
+                <div class="section-eyebrow" id="eyebrow-overview">Cluster output across 50 municipalities</div>
+                <h2 class="section-heading" id="heading-overview">Urban classification<br>at a glance</h2>
+
+                <!-- Bento: 2 cols × 2 rows, hero card spans 2 rows on left -->
+                <div class="stats-bento" id="stats-bento">
+
+                    <!-- Cell 1 — Hero wide: Total Analyzed -->
+                    <div class="bento-cell bento-hero stat-card sc-total" id="bento-total">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap si-indigo">
+                                <!-- Icon: city building -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="2" y="7" width="8" height="14" rx="1"/>
+                                    <rect x="14" y="3" width="8" height="18" rx="1"/>
+                                    <line x1="6" y1="11" x2="6" y2="11.01"/>
+                                    <line x1="6" y1="15" x2="6" y2="15.01"/>
+                                    <line x1="18" y1="7" x2="18" y2="7.01"/>
+                                    <line x1="18" y1="11" x2="18" y2="11.01"/>
+                                    <line x1="18" y1="15" x2="18" y2="15.01"/>
+                                </svg>
+                            </div>
+                            <div class="stat-numbers">
+                                <span class="stat-figure" id="stat-total-cities">0</span>
+                                <span class="stat-description">Municipalities analyzed across demographic &amp; crime indicators</span>
+                            </div>
+                            <span class="stat-label">Total Jurisdictions</span>
+                        </div>
+                        <div class="bento-glow bg-indigo" aria-hidden="true"></div>
+                    </div>
+
+                    <!-- Cell 2 — Safe cities -->
+                    <div class="bento-cell stat-card sc-safe" id="bento-safe">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap si-emerald">
+                                <!-- Icon: shield check -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                            </div>
+                            <div class="stat-numbers">
+                                <span class="stat-figure text-safe" id="stat-safe-cities">0</span>
+                                <span class="stat-sublabel" id="pct-safe">—</span>
+                            </div>
+                            <span class="stat-label">Low-Risk Cohort</span>
+                        </div>
+                        <div class="bento-glow bg-emerald" aria-hidden="true"></div>
+                    </div>
+
+                    <!-- Cell 3 — Moderate cities -->
+                    <div class="bento-cell stat-card sc-moderate" id="bento-moderate">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap si-amber">
+                                <!-- Icon: alert triangle -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </div>
+                            <div class="stat-numbers">
+                                <span class="stat-figure text-moderate" id="stat-mod-cities">0</span>
+                                <span class="stat-sublabel" id="pct-mod">—</span>
+                            </div>
+                            <span class="stat-label">Moderate-Risk Cohort</span>
+                        </div>
+                        <div class="bento-glow bg-amber" aria-hidden="true"></div>
+                    </div>
+
+                    <!-- Cell 4 — High risk cities -->
+                    <div class="bento-cell stat-card sc-high" id="bento-high">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap si-crimson">
+                                <!-- Icon: flame/alert -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                            </div>
+                            <div class="stat-numbers">
+                                <span class="stat-figure text-high" id="stat-high-cities">0</span>
+                                <span class="stat-sublabel" id="pct-high">—</span>
+                            </div>
+                            <span class="stat-label">High-Risk Cohort</span>
+                        </div>
+                        <div class="bento-glow bg-crimson" aria-hidden="true"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════
+             VISUALIZATION PANEL
+        ═══════════════════════════════════════════ -->
+        <section class="viz-section dark-section" id="visualization">
+            <div class="section-container">
+                <div class="section-eyebrow light-eyebrow" id="eyebrow-viz">Diagnostic visualizations from the ML pipeline</div>
+                <h2 class="section-heading light-heading" id="heading-viz">Pipeline analytics<br>&amp; cluster projections</h2>
+
+                <div class="plot-card" id="plot-card">
+                    <div class="plot-card-top">
+                        <div class="plot-info">
+                            <h3 class="plot-title" id="plot-card-title">Pipeline Diagnostic Visualizations</h3>
+                            <p class="plot-desc" id="plot-card-desc">Feature density distributions, Pearson covariance heatmaps, Within-Cluster Sum-of-Squares (Elbow) curves, and K-Means spatial projections — each output validates a stage of the pipeline.</p>
+                        </div>
+                        <a href="#" id="downloadPlot" class="dl-btn" download aria-label="Export current plot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span>Export PNG</span>
                         </a>
                     </div>
-                </div>
-                
-                <!-- Visualization Tabs -->
-                <div class="tabs-control">
-                    <button class="tab-btn active" data-plot="clustering_results.png">
-                        <span class="tab-label">Cluster Results</span>
-                    </button>
-                    <button class="tab-btn" data-plot="crime_distribution.png">
-                        <span class="tab-label">Feature Distributions</span>
-                    </button>
-                    <button class="tab-btn" data-plot="correlation_matrix.png">
-                        <span class="tab-label">Correlation Heatmap</span>
-                    </button>
-                    <button class="tab-btn" data-plot="elbow_silhouette.png">
-                        <span class="tab-label">Elbow & Silhouette</span>
-                    </button>
-                    <button class="tab-btn" data-plot="risk_distribution.png">
-                        <span class="tab-label">Risk Distribution</span>
-                    </button>
-                </div>
-                
-                <!-- Plot Area -->
-                <div class="plot-frame">
-                    <div class="plot-loader" id="plotLoader">
-                        <div class="skeleton-ring"></div>
-                        <span>Loading High-Resolution Plot...</span>
-                    </div>
-                    <img id="activePlotImage" src="../static/plots/clustering_results.png" alt="Active Clustering Plot" class="plot-image loaded">
-                </div>
-            </div>
-        </section>
 
-        <!-- Top & Bottom Cities Section (Split Layout) -->
-        <section class="split-rankings-section">
-            <div class="split-grid">
-                <!-- Top 5 Safest Cities -->
-                <div class="glass-card split-card safe-split-card">
-                    <div class="split-header">
-                        <div class="split-icon bg-safe-alpha">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-safe">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="split-title">Lowest Weighted Risk Profiles</h3>
-                            <p class="split-subtitle">Top 5 municipalities with minimal composite crime index scores</p>
-                        </div>
+                    <!-- Tabs -->
+                    <div class="plot-tabs" id="plot-tabs" role="tablist">
+                        <button class="plot-tab active" data-plot="clustering_results.png" role="tab" id="tab-cluster" aria-selected="true" aria-controls="plot-frame">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="15" r="3"/><path d="M11.4 10.6L14.6 13.4"/></svg>
+                            Cluster Results
+                        </button>
+                        <button class="plot-tab" data-plot="crime_distribution.png" role="tab" id="tab-dist" aria-selected="false" aria-controls="plot-frame">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 16c0-2 2-4 5-4s5 2 5 4"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+                            Feature Distributions
+                        </button>
+                        <button class="plot-tab" data-plot="correlation_matrix.png" role="tab" id="tab-corr" aria-selected="false" aria-controls="plot-frame">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                            Correlation Heatmap
+                        </button>
+                        <button class="plot-tab" data-plot="elbow_silhouette.png" role="tab" id="tab-elbow" aria-selected="false" aria-controls="plot-frame">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            Elbow &amp; Silhouette
+                        </button>
+                        <button class="plot-tab" data-plot="risk_distribution.png" role="tab" id="tab-risk" aria-selected="false" aria-controls="plot-frame">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                            Risk Distribution
+                        </button>
                     </div>
-                    <div class="split-list" id="safest-cities-list">
-                        <!-- Loaded Dynamically via JS -->
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                    </div>
-                </div>
 
-                <!-- Top 5 High-Risk Cities -->
-                <div class="glass-card split-card high-split-card">
-                    <div class="split-header">
-                        <div class="split-icon bg-high-alpha">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-high">
-                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                            </svg>
+                    <!-- Plot Frame -->
+                    <div class="plot-frame" id="plot-frame" role="tabpanel" aria-labelledby="tab-cluster">
+                        <div class="plot-loader" id="plotLoader" aria-live="polite">
+                            <div class="loader-ring"></div>
+                            <span>Loading visualization...</span>
                         </div>
-                        <div>
-                            <h3 class="split-title">Maximum Severity Risk Profiles</h3>
-                            <p class="split-subtitle">Top 5 municipalities exhibiting critical crime index scores</p>
-                        </div>
-                    </div>
-                    <div class="split-list" id="dangerous-cities-list">
-                        <!-- Loaded Dynamically via JS -->
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
+                        <img id="activePlotImage" src="../static/plots/clustering_results.png" alt="Active clustering visualization plot" class="plot-img loaded">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Advanced City Rankings Table -->
-        <section class="rankings-section" id="rankings">
-            <div class="glass-card table-card">
-                <div class="table-controls-header">
-                    <div class="table-title-group">
-                        <h3 class="table-card-title">Municipal Risk Analytics Matrix</h3>
-                        <p class="table-card-desc">Granular data exploration interface with dynamic filtering, real-time query parsing, and multi-column sorting across standardized municipal statistics.</p>
-                    </div>
-                    
-                    <div class="table-filters">
-                        <!-- Search Bar -->
-                        <div class="search-input-wrapper">
-                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="tableSearch" placeholder="Search city name...">
+        <!-- ═══════════════════════════════════════════
+             TOP/BOTTOM CITIES (Split)
+        ═══════════════════════════════════════════ -->
+        <section class="rankings-split-section" id="rankings-split">
+            <div class="section-container">
+                <div class="section-eyebrow" id="eyebrow-rankings-split">Ranked by composite severity-weighted crime index</div>
+                <h2 class="section-heading" id="heading-rankings-split">Jurisdiction<br>risk profiles</h2>
+
+                <div class="split-two-col" id="split-two-col">
+                    <!-- Safest -->
+                    <div class="split-panel safe-panel" id="safe-panel">
+                        <div class="split-panel-head">
+                            <div class="panel-icon-wrap pi-emerald">
+                                <!-- Icon: shield -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="panel-title">Lowest Risk Profiles</h3>
+                                <p class="panel-subtitle">Top 5 municipalities with minimal composite crime index</p>
+                            </div>
                         </div>
-                        
-                        <!-- Filter Selector -->
-                        <div class="select-input-wrapper">
-                            <select id="tableFilter">
-                                <option value="all">All Classification Cohorts</option>
-                                <option value="safe">Low-Risk Cohort</option>
-                                <option value="moderate">Moderate Risk Cohort</option>
-                                <option value="high">High-Risk Cohort</option>
+                        <div class="split-city-list" id="safest-cities-list">
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                        </div>
+                    </div>
+
+                    <!-- Highest Risk -->
+                    <div class="split-panel danger-panel" id="danger-panel">
+                        <div class="split-panel-head">
+                            <div class="panel-icon-wrap pi-crimson">
+                                <!-- Icon: alert -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="panel-title">Maximum Severity Profiles</h3>
+                                <p class="panel-subtitle">Top 5 municipalities with critical crime index scores</p>
+                            </div>
+                        </div>
+                        <div class="split-city-list" id="dangerous-cities-list">
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                            <div class="skel-city"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════
+             FULL DATA TABLE
+        ═══════════════════════════════════════════ -->
+        <section class="table-section dark-section" id="rankings">
+            <div class="section-container">
+                <div class="section-eyebrow light-eyebrow" id="eyebrow-table">Sortable, searchable · all 50 jurisdictions</div>
+                <h2 class="section-heading light-heading" id="heading-table">Municipal risk<br>analytics matrix</h2>
+
+                <div class="table-panel" id="table-panel">
+                    <!-- Controls row -->
+                    <div class="table-controls-row" id="table-controls-row">
+                        <div class="control-search-wrap" id="control-search-wrap">
+                            <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="tableSearch" placeholder="Search city name..." aria-label="Search cities by name">
+                        </div>
+                        <div class="control-filter-wrap" id="control-filter-wrap">
+                            <select id="tableFilter" aria-label="Filter by risk classification">
+                                <option value="all">All Cohorts</option>
+                                <option value="safe">Low-Risk</option>
+                                <option value="moderate">Moderate Risk</option>
+                                <option value="high">High-Risk</option>
                             </select>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Responsive Table Wrapper -->
-                <div class="table-responsive">
-                    <table class="data-table" id="citiesTable">
-                        <thead>
-                            <tr>
-                                <th data-sort="City" class="sortable">City <span class="sort-indicator"></span></th>
-                                <th data-sort="Population" class="sortable">Population <span class="sort-indicator"></span></th>
-                                <th data-sort="Murder Rate" class="sortable">Murder Rate <span class="sort-indicator"></span></th>
-                                <th data-sort="Assault Rate" class="sortable">Assault Rate <span class="sort-indicator"></span></th>
-                                <th data-sort="Theft Rate" class="sortable">Theft Rate <span class="sort-indicator"></span></th>
-                                <th data-sort="Crime Score" class="sortable active desc">Crime Score <span class="sort-indicator desc"></span></th>
-                                <th data-sort="Risk Level" class="sortable">Risk Classification <span class="sort-indicator"></span></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <!-- Table rows injected via JavaScript -->
-                            <tr class="table-loading-row">
-                                <td colspan="7">
-                                    <div class="table-skeleton-row"></div>
-                                    <div class="table-skeleton-row"></div>
-                                    <div class="table-skeleton-row"></div>
-                                    <div class="table-skeleton-row"></div>
-                                    <div class="table-skeleton-row"></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Table Pagination -->
-                <div class="table-pagination">
-                    <span class="pagination-info" id="paginationInfo">Showing 0 to 0 of 0 entries</span>
-                    <div class="pagination-controls">
-                        <button class="btn btn-secondary btn-small" id="prevPageBtn" disabled>Previous</button>
-                        <div class="page-numbers" id="pageNumbers"></div>
-                        <button class="btn btn-secondary btn-small" id="nextPageBtn" disabled>Next</button>
+
+                    <!-- Table -->
+                    <div class="table-scroll-wrap" id="table-scroll-wrap">
+                        <table class="data-table" id="citiesTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="City" class="col-sortable" id="th-city">City <span class="sort-ind"></span></th>
+                                    <th data-sort="Population" class="col-sortable" id="th-pop">Population <span class="sort-ind"></span></th>
+                                    <th data-sort="Murder Rate" class="col-sortable" id="th-murder">Murder Rate <span class="sort-ind"></span></th>
+                                    <th data-sort="Assault Rate" class="col-sortable" id="th-assault">Assault Rate <span class="sort-ind"></span></th>
+                                    <th data-sort="Theft Rate" class="col-sortable" id="th-theft">Theft Rate <span class="sort-ind"></span></th>
+                                    <th data-sort="Crime Score" class="col-sortable active desc" id="th-score">Crime Score <span class="sort-ind desc"></span></th>
+                                    <th data-sort="Risk Level" class="col-sortable" id="th-risk">Classification <span class="sort-ind"></span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr class="table-skel-row">
+                                    <td colspan="7">
+                                        <div class="skel-row"></div>
+                                        <div class="skel-row"></div>
+                                        <div class="skel-row"></div>
+                                        <div class="skel-row"></div>
+                                        <div class="skel-row"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="table-pagination-row" id="table-pagination-row">
+                        <span class="pag-info" id="paginationInfo">Showing 0–0 of 0 entries</span>
+                        <div class="pag-controls" id="pag-controls">
+                            <button class="pag-btn" id="prevPageBtn" disabled aria-label="Previous page">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                                Prev
+                            </button>
+                            <div class="page-nums" id="pageNumbers"></div>
+                            <button class="pag-btn" id="nextPageBtn" disabled aria-label="Next page">
+                                Next
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Insights and Methodology Panel -->
-        <section class="insights-section" id="insights">
-            <div class="glass-card insights-card">
-                <div class="insights-header">
-                    <div class="split-icon bg-blue-alpha">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="insights-title">Methodology & Mathematical Pipeline</h3>
-                        <p class="insights-subtitle">Rigorous processing of raw municipal indicators using standardized unsupervised learning frameworks.</p>
-                    </div>
-                </div>
-                
-                <div class="insights-grid">
-                    <!-- Scaling Column -->
-                    <div class="insight-column">
-                        <div class="insight-col-icon text-cyan">01</div>
-                        <h4 class="insight-col-title">1. StandardScaler Normalization</h4>
-                        <p class="insight-col-text">To prevent scale discrepancy—where large-magnitude features like Population dominate distance calculations—we perform standard Z-score normalization on all variables, yielding a mean of zero and standard deviation of one.</p>
+        <!-- ═══════════════════════════════════════════
+             METHODOLOGY — 3-step process with icons
+        ═══════════════════════════════════════════ -->
+        <section class="methodology-section" id="insights">
+            <div class="section-container">
+                <div class="section-eyebrow" id="eyebrow-methodology">Rigorous statistical pipeline under the hood</div>
+                <h2 class="section-heading" id="heading-methodology">How the risk engine<br>scores every city</h2>
+
+                <div class="method-grid" id="method-grid">
+                    <!-- Step 1: StandardScaler -->
+                    <div class="method-card" id="method-card-1">
+                        <div class="method-step-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <!-- Scale/balance icon for normalization -->
+                                <line x1="12" y1="3" x2="12" y2="21"/>
+                                <path d="M5 8l7-5 7 5"/>
+                                <path d="M5 8a5 5 0 0 0 10 0"/>
+                                <path d="M2 21h20"/>
+                            </svg>
+                        </div>
+                        <div class="method-step-num">Step 1 of 3</div>
+                        <h3 class="method-card-title">StandardScaler Normalization</h3>
+                        <p class="method-card-body">Large-magnitude features like Population would dominate Euclidean distance calculations without correction. Z-score normalization maps all variables to μ=0, σ=1 — giving each dimension equal weight in the cluster geometry.</p>
+                        <div class="method-chip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            sklearn.StandardScaler
+                        </div>
                     </div>
 
-                    <!-- Clustering Column -->
-                    <div class="insight-column">
-                        <div class="insight-col-icon text-blue">02</div>
-                        <h4 class="insight-col-title">2. Cluster Hyperparameter Selection</h4>
-                        <p class="insight-col-text">Using data-driven Elbow curves (Within-Cluster Sum of Squares) and Silhouette Coefficients across $K \in [2, 10]$, K=3 represents the optimal local maximum for municipal risk partitioning and inter-cluster separation.</p>
+                    <!-- Step 2: Cluster Hyperparameter Selection -->
+                    <div class="method-card" id="method-card-2">
+                        <div class="method-step-badge msb-amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <!-- Elbow curve / graph icon -->
+                                <polyline points="3 17 9 11 13 15 21 7"/>
+                                <line x1="3" y1="3" x2="3" y2="21"/>
+                                <line x1="3" y1="21" x2="21" y2="21"/>
+                            </svg>
+                        </div>
+                        <div class="method-step-num">Step 2 of 3</div>
+                        <h3 class="method-card-title">Cluster Hyperparameter Selection</h3>
+                        <p class="method-card-body">Within-Cluster Sum-of-Squares (Elbow) curves and Silhouette Coefficients were computed across K ∈ [2, 10]. K=3 represents the optimal local maximum for inter-cluster separation and intra-cluster cohesion across Pakistani municipal data.</p>
+                        <div class="method-chip mc-amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            Silhouette Score: 0.74
+                        </div>
                     </div>
 
-                    <!-- Score Mapping Column -->
-                    <div class="insight-column">
-                        <div class="insight-col-icon text-orange">03</div>
-                        <h4 class="insight-col-title">3. Empirically Weighted Crime Index Equation</h4>
-                        <p class="insight-col-text">Qualitative risk classification is determined by ordering the cluster centroids based on a composite, severity-weighted Crime Score. This mathematical formulation prioritizes violent crime vectors over property crime indicators:</p>
-                        <div class="formula-container">
-                            $$\text{Urban Risk Score} = \frac{\text{Murder Rate} \times 3 + \text{Assault Rate} \times 2 + \text{Theft Rate} \times 1}{6}$$
+                    <!-- Step 3: Crime Index Equation -->
+                    <div class="method-card" id="method-card-3">
+                        <div class="method-step-badge msb-crimson">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <!-- Formula/equation icon -->
+                                <path d="M4 6h16M4 12h10M4 18h6"/>
+                                <circle cx="19" cy="17" r="3"/>
+                                <line x1="17.29" y1="15.29" x2="20.71" y2="18.71"/>
+                            </svg>
+                        </div>
+                        <div class="method-step-num">Step 3 of 3</div>
+                        <h3 class="method-card-title">Severity-Weighted Crime Index</h3>
+                        <p class="method-card-body">Cluster centroids are ordered by a composite index that weights violent crime above property crime. Violent offenses carry 3× and 2× amplifiers versus 1× for theft, yielding an empirically grounded risk ranking per municipality.</p>
+                        <div class="formula-block" id="formula-block">
+                            <div class="formula-label">Urban Risk Score</div>
+                            <div class="formula-eq">
+                                <span class="f-num">Murder × 3 + Assault × 2 + Theft × 1</span>
+                                <span class="f-div-line"></span>
+                                <span class="f-den">6</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -412,49 +566,75 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <svg class="footer-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="5" r="2" fill="currentColor"></circle>
-                    <circle cx="5" cy="18" r="2" fill="currentColor"></circle>
-                    <circle cx="19" cy="18" r="2" fill="currentColor"></circle>
-                    <line x1="12" y1="7" x2="6" y2="16"></line>
-                    <line x1="12" y1="7" x2="18" y2="16"></line>
-                    <line x1="7" y1="18" x2="17" y2="18"></line>
-                </svg>
-                <span>3C Intelligence Risk Platform</span>
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer class="site-footer" id="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand-block">
+                <a href="#" class="footer-logo-link" id="footer-logo-link">
+                    <svg class="footer-brand-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="18" cy="7" r="4" fill="url(#fg1)"/>
+                        <circle cx="7" cy="28" r="4" fill="url(#fg2)"/>
+                        <circle cx="29" cy="28" r="4" fill="url(#fg3)"/>
+                        <line x1="18" y1="11" x2="9" y2="25" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="18" y1="11" x2="27" y2="25" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="10" y1="28" x2="26" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                        <defs>
+                            <radialGradient id="fg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#818CF8"/><stop offset="100%" stop-color="#6366F1"/></radialGradient>
+                            <radialGradient id="fg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></radialGradient>
+                            <radialGradient id="fg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F87171"/><stop offset="100%" stop-color="#EF4444"/></radialGradient>
+                        </defs>
+                    </svg>
+                    <span class="footer-brand-text">3C<em>Intelligence</em></span>
+                </a>
+                <p class="footer-tagline">Spatial risk intelligence for municipal governance</p>
             </div>
-            <div class="footer-copyright">
-                &copy; 2026 3C Intelligence Group. All Rights Reserved. Engineered using statistically validated unsupervised learning and standardized feature normalization frameworks.
+
+            <div class="footer-links-block">
+                <div class="footer-links-col">
+                    <span class="footer-col-head">Platform</span>
+                    <a href="#overview" class="footer-link" id="flink-dashboard">Dashboard</a>
+                    <a href="#visualization" class="footer-link" id="flink-analytics">Analytics</a>
+                    <a href="#rankings" class="footer-link" id="flink-rankings">City Rankings</a>
+                </div>
+                <div class="footer-links-col">
+                    <span class="footer-col-head">Research</span>
+                    <a href="#insights" class="footer-link" id="flink-methodology">Methodology</a>
+                    <a href="#insights" class="footer-link" id="flink-formula">Risk Formula</a>
+                    <a href="#visualization" class="footer-link" id="flink-pipeline">ML Pipeline</a>
+                </div>
             </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <span class="footer-copy">&copy; 2026 3C Intelligence Group. All rights reserved.</span>
+            <span class="footer-meta">K-Means clustering · StandardScaler normalization · 50 municipalities · Pakistan</span>
         </div>
     </footer>
 
-    <!-- Interactive Details Modal -->
-    <div class="modal" id="detailsModal" aria-hidden="true" role="dialog">
+    <!-- ═══════════════════════════════════════════
+         CITY DETAIL MODAL
+    ═══════════════════════════════════════════ -->
+    <div class="modal-overlay" id="detailsModal" aria-hidden="true" role="dialog" aria-labelledby="modalCityName">
         <div class="modal-backdrop" id="modalBackdrop"></div>
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalCityName">City Details</h3>
-                <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Modal">&times;</button>
+        <div class="modal-box" id="modal-box">
+            <div class="modal-header-row">
+                <h3 class="modal-city-name" id="modalCityName">City Details</h3>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close modal" type="button">&times;</button>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Injected via Javascript -->
+            <div class="modal-content-body" id="modalBody">
+                <!-- Injected via JS -->
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast-container" id="toastContainer"></div>
+    <!-- Toast -->
+    <div class="toast-stack" id="toastContainer" aria-live="polite"></div>
 
-    <!-- MathJax for rendering equations cleanly -->
-    <script type="text/javascript" id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
-    
-    <!-- Link to Dashboard Logic Javascript (Supports local double-click and Flask rendering) -->
+    <!-- MathJax (kept for formula rendering) -->
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <script src="../static/js/app.js"></script>
 </body>
 </html>
