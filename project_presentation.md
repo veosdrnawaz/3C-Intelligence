@@ -36,6 +36,7 @@ Jab koi aapse ML model ki details pooche, to ye main concepts explain karein:
 Aap folders ko explain kar sakte hain ke project clean aur professional structured hai:
 *   `city_crime_clustering.py`: Main ML Python pipeline (data generation, fitting, plotting aur model export).
 *   `app.py`: Light Flask backend server jo analytics dashboard render karta hai aur API JSON data provide karta hai.
+*   `vercel.json` & `requirements.txt`: Deployment parameters jo Vercel serverless build and routing parameters ko define karte hain.
 *   `data/`: Serialized models (`kmeans_model.pkl`, `scaler.pkl`) aur output CSV files.
 *   `static/plots/`: High-resolution PNG graphs aur models diagnostic charts.
 *   `static/css/ & static/js/`: Dual-mode (Light/Dark default) dashboard components aur custom offline fallback javascript state.
