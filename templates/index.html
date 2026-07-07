@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3C Intelligence | Spatial Risk & Urban Security Analytics</title>
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Link to external Vanilla CSS (Supports local double-click and Flask rendering) -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <!-- Sticky Glass Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2" fill="currentColor"></circle>
+                    <circle cx="5" cy="18" r="2" fill="currentColor"></circle>
+                    <circle cx="19" cy="18" r="2" fill="currentColor"></circle>
+                    <line x1="12" y1="7" x2="6" y2="16"></line>
+                    <line x1="12" y1="7" x2="18" y2="16"></line>
+                    <line x1="7" y1="18" x2="17" y2="18"></line>
+                </svg>
+                <span class="logo-text">3C<span class="logo-highlight">Intelligence</span></span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#overview" class="nav-link active">Dashboard</a>
+                <a href="#visualization" class="nav-link">Analytics</a>
+                <a href="#rankings" class="nav-link">City Rankings</a>
+                <a href="#insights" class="nav-link">Methodology</a>
+                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Dropdown Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#overview" class="mobile-nav-link">Dashboard</a>
+            <a href="#visualization" class="mobile-nav-link">Analytics</a>
+            <a href="#rankings" class="mobile-nav-link">City Rankings</a>
+            <a href="#insights" class="mobile-nav-link">Methodology</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-content">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-bg-glow"></div>
+            <div class="hero-container">
+                <div class="hero-text-content">
+                    <span class="hero-badge">3C INTELLIGENCE v1.2</span>
+                    <h1 class="hero-title">3C Intelligence Spatial Risk Engine</h1>
+                    <p class="hero-subtitle">AI-Powered Urban Risk Intelligence Platform. Multi-dimensional risk profiling powered by unsupervised machine learning models to identify municipal security sectors, delivering statistical rigor for public policy and municipal governance.</p>
+                    <div class="hero-actions">
+                        <a href="#overview" class="btn btn-primary">
+                            <span>Access Analytics System</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                        <a href="#insights" class="btn btn-secondary">Review Methodology</a>
+                    </div>
+                </div>
+                
+                <div class="hero-illustration">
+                    <div class="abstract-card">
+                        <div class="card-glow-blue"></div>
+                        <div class="grid-line horizontal h1"></div>
+                        <div class="grid-line horizontal h2"></div>
+                        <div class="grid-line horizontal h3"></div>
+                        <div class="grid-line vertical v1"></div>
+                        <div class="grid-line vertical v2"></div>
+                        <div class="grid-line vertical v3"></div>
+                        
+                        <!-- Floating Nodes to represent K-Means clustering -->
+                        <div class="ai-node red n1" style="top: 25%; left: 70%;"></div>
+                        <div class="ai-node red n2" style="top: 35%; left: 80%;"></div>
+                        <div class="ai-node orange n3" style="top: 50%; left: 45%;"></div>
+                        <div class="ai-node orange n4" style="top: 60%; left: 55%;"></div>
+                        <div class="ai-node green n5" style="top: 70%; left: 20%;"></div>
+                        <div class="ai-node green n6" style="top: 80%; left: 30%;"></div>
+                        
+                        <div class="connection-line c1"></div>
+                        <div class="connection-line c2"></div>
+                        
+                        <div class="card-label">K-Means Cluster Space (K=3)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crime Overview Metrics -->
+        <section class="overview-section" id="overview">
+            <div class="section-header">
+                <h2 class="section-title">Urban Crime Analytics & Classification</h2>
+                <p class="section-desc">Model-driven municipal risk segmentation generated through standardized clustering validation.</p>
+            </div>
+            
+            <div class="metrics-grid">
+                <!-- Total Cities Card -->
+                <div class="metric-card card-total">
+                    <div class="metric-icon-bg">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                            <line x1="9" y1="22" x2="9" y2="16"></line>
+                            <line x1="15" y1="22" x2="15" y2="16"></line>
+                            <line x1="9" y1="16" x2="15" y2="16"></line>
+                            <path d="M9 12h.01M15 12h.01M9 8h.01M15 8h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-label">Total Analyzed Jurisdictions</span>
+                        <h3 class="metric-value" id="stat-total-cities">0</h3>
+                        <span class="metric-subtext">Municipalities evaluated across demographic indicators</span>
+                    </div>
+                </div>
+
+                <!-- Safe Cities Card -->
+                <div class="metric-card card-safe">
+                    <div class="metric-glow-green"></div>
+                    <div class="metric-icon-bg">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-safe">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-label">Low-Risk Cohorts</span>
+                        <h3 class="metric-value text-safe" id="stat-safe-cities">0</h3>
+                        <span class="metric-subtext" id="pct-safe">Optimal cluster classification with minimal crime indices</span>
+                    </div>
+                </div>
+
+                <!-- Moderate Risk Cities Card -->
+                <div class="metric-card card-moderate">
+                    <div class="metric-glow-warning"></div>
+                    <div class="metric-icon-bg">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-moderate">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-label">Moderate-Risk Cohorts</span>
+                        <h3 class="metric-value text-moderate" id="stat-mod-cities">0</h3>
+                        <span class="metric-subtext" id="pct-mod">Mid-range urban risk profile cluster allocations</span>
+                    </div>
+                </div>
+
+                <!-- High Risk Cities Card -->
+                <div class="metric-card card-high">
+                    <div class="metric-glow-danger"></div>
+                    <div class="metric-icon-bg">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-high">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9zM13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-label">High-Risk Cohorts</span>
+                        <h3 class="metric-value text-high" id="stat-high-cities">0</h3>
+                        <span class="metric-subtext" id="pct-high">Critical priority areas with maximum spatial centroids</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Clustering Visualizations -->
+        <section class="visualization-section" id="visualization">
+            <div class="glass-card plot-container">
+                <div class="plot-header">
+                    <div class="plot-title-wrapper">
+                        <h3 class="plot-card-title">Pipeline Diagnostic Visualizations</h3>
+                        <p class="plot-card-desc">Diagnostic outputs documenting feature distribution density, covariance heatmaps, Elbow Sum-of-Squares curves, and K-Means spatial cluster projections.</p>
+                    </div>
+                    <div class="plot-actions">
+                        <a href="#" id="downloadPlot" class="btn btn-secondary btn-icon" download aria-label="Export Current Plot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                            </svg>
+                            <span>Export High-Resolution Vector</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Visualization Tabs -->
+                <div class="tabs-control">
+                    <button class="tab-btn active" data-plot="clustering_results.png">
+                        <span class="tab-label">Cluster Results</span>
+                    </button>
+                    <button class="tab-btn" data-plot="crime_distribution.png">
+                        <span class="tab-label">Feature Distributions</span>
+                    </button>
+                    <button class="tab-btn" data-plot="correlation_matrix.png">
+                        <span class="tab-label">Correlation Heatmap</span>
+                    </button>
+                    <button class="tab-btn" data-plot="elbow_silhouette.png">
+                        <span class="tab-label">Elbow & Silhouette</span>
+                    </button>
+                    <button class="tab-btn" data-plot="risk_distribution.png">
+                        <span class="tab-label">Risk Distribution</span>
+                    </button>
+                </div>
+                
+                <!-- Plot Area -->
+                <div class="plot-frame">
+                    <div class="plot-loader" id="plotLoader">
+                        <div class="skeleton-ring"></div>
+                        <span>Loading High-Resolution Plot...</span>
+                    </div>
+                    <img id="activePlotImage" src="../static/plots/clustering_results.png" alt="Active Clustering Plot" class="plot-image loaded">
+                </div>
+            </div>
+        </section>
+
+        <!-- Top & Bottom Cities Section (Split Layout) -->
+        <section class="split-rankings-section">
+            <div class="split-grid">
+                <!-- Top 5 Safest Cities -->
+                <div class="glass-card split-card safe-split-card">
+                    <div class="split-header">
+                        <div class="split-icon bg-safe-alpha">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-safe">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="split-title">Lowest Weighted Risk Profiles</h3>
+                            <p class="split-subtitle">Top 5 municipalities with minimal composite crime index scores</p>
+                        </div>
+                    </div>
+                    <div class="split-list" id="safest-cities-list">
+                        <!-- Loaded Dynamically via JS -->
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                    </div>
+                </div>
+
+                <!-- Top 5 High-Risk Cities -->
+                <div class="glass-card split-card high-split-card">
+                    <div class="split-header">
+                        <div class="split-icon bg-high-alpha">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-high">
+                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="split-title">Maximum Severity Risk Profiles</h3>
+                            <p class="split-subtitle">Top 5 municipalities exhibiting critical crime index scores</p>
+                        </div>
+                    </div>
+                    <div class="split-list" id="dangerous-cities-list">
+                        <!-- Loaded Dynamically via JS -->
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced City Rankings Table -->
+        <section class="rankings-section" id="rankings">
+            <div class="glass-card table-card">
+                <div class="table-controls-header">
+                    <div class="table-title-group">
+                        <h3 class="table-card-title">Municipal Risk Analytics Matrix</h3>
+                        <p class="table-card-desc">Granular data exploration interface with dynamic filtering, real-time query parsing, and multi-column sorting across standardized municipal statistics.</p>
+                    </div>
+                    
+                    <div class="table-filters">
+                        <!-- Search Bar -->
+                        <div class="search-input-wrapper">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="tableSearch" placeholder="Search city name...">
+                        </div>
+                        
+                        <!-- Filter Selector -->
+                        <div class="select-input-wrapper">
+                            <select id="tableFilter">
+                                <option value="all">All Classification Cohorts</option>
+                                <option value="safe">Low-Risk Cohort</option>
+                                <option value="moderate">Moderate Risk Cohort</option>
+                                <option value="high">High-Risk Cohort</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Responsive Table Wrapper -->
+                <div class="table-responsive">
+                    <table class="data-table" id="citiesTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="City" class="sortable">City <span class="sort-indicator"></span></th>
+                                <th data-sort="Population" class="sortable">Population <span class="sort-indicator"></span></th>
+                                <th data-sort="Murder Rate" class="sortable">Murder Rate <span class="sort-indicator"></span></th>
+                                <th data-sort="Assault Rate" class="sortable">Assault Rate <span class="sort-indicator"></span></th>
+                                <th data-sort="Theft Rate" class="sortable">Theft Rate <span class="sort-indicator"></span></th>
+                                <th data-sort="Crime Score" class="sortable active desc">Crime Score <span class="sort-indicator desc"></span></th>
+                                <th data-sort="Risk Level" class="sortable">Risk Classification <span class="sort-indicator"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Table rows injected via JavaScript -->
+                            <tr class="table-loading-row">
+                                <td colspan="7">
+                                    <div class="table-skeleton-row"></div>
+                                    <div class="table-skeleton-row"></div>
+                                    <div class="table-skeleton-row"></div>
+                                    <div class="table-skeleton-row"></div>
+                                    <div class="table-skeleton-row"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Table Pagination -->
+                <div class="table-pagination">
+                    <span class="pagination-info" id="paginationInfo">Showing 0 to 0 of 0 entries</span>
+                    <div class="pagination-controls">
+                        <button class="btn btn-secondary btn-small" id="prevPageBtn" disabled>Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button class="btn btn-secondary btn-small" id="nextPageBtn" disabled>Next</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights and Methodology Panel -->
+        <section class="insights-section" id="insights">
+            <div class="glass-card insights-card">
+                <div class="insights-header">
+                    <div class="split-icon bg-blue-alpha">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="insights-title">Methodology & Mathematical Pipeline</h3>
+                        <p class="insights-subtitle">Rigorous processing of raw municipal indicators using standardized unsupervised learning frameworks.</p>
+                    </div>
+                </div>
+                
+                <div class="insights-grid">
+                    <!-- Scaling Column -->
+                    <div class="insight-column">
+                        <div class="insight-col-icon text-cyan">01</div>
+                        <h4 class="insight-col-title">1. StandardScaler Normalization</h4>
+                        <p class="insight-col-text">To prevent scale discrepancy—where large-magnitude features like Population dominate distance calculations—we perform standard Z-score normalization on all variables, yielding a mean of zero and standard deviation of one.</p>
+                    </div>
+
+                    <!-- Clustering Column -->
+                    <div class="insight-column">
+                        <div class="insight-col-icon text-blue">02</div>
+                        <h4 class="insight-col-title">2. Cluster Hyperparameter Selection</h4>
+                        <p class="insight-col-text">Using data-driven Elbow curves (Within-Cluster Sum of Squares) and Silhouette Coefficients across $K \in [2, 10]$, K=3 represents the optimal local maximum for municipal risk partitioning and inter-cluster separation.</p>
+                    </div>
+
+                    <!-- Score Mapping Column -->
+                    <div class="insight-column">
+                        <div class="insight-col-icon text-orange">03</div>
+                        <h4 class="insight-col-title">3. Empirically Weighted Crime Index Equation</h4>
+                        <p class="insight-col-text">Qualitative risk classification is determined by ordering the cluster centroids based on a composite, severity-weighted Crime Score. This mathematical formulation prioritizes violent crime vectors over property crime indicators:</p>
+                        <div class="formula-container">
+                            $$\text{Urban Risk Score} = \frac{\text{Murder Rate} \times 3 + \text{Assault Rate} \times 2 + \text{Theft Rate} \times 1}{6}$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <svg class="footer-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2" fill="currentColor"></circle>
+                    <circle cx="5" cy="18" r="2" fill="currentColor"></circle>
+                    <circle cx="19" cy="18" r="2" fill="currentColor"></circle>
+                    <line x1="12" y1="7" x2="6" y2="16"></line>
+                    <line x1="12" y1="7" x2="18" y2="16"></line>
+                    <line x1="7" y1="18" x2="17" y2="18"></line>
+                </svg>
+                <span>3C Intelligence Risk Platform</span>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 3C Intelligence Group. All Rights Reserved. Engineered using statistically validated unsupervised learning and standardized feature normalization frameworks.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Details Modal -->
+    <div class="modal" id="detailsModal" aria-hidden="true" role="dialog">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalCityName">City Details</h3>
+                <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Injected via Javascript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- MathJax for rendering equations cleanly -->
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <!-- Link to Dashboard Logic Javascript (Supports local double-click and Flask rendering) -->
+    <script src="../static/js/app.js"></script>
+</body>
+</html>
