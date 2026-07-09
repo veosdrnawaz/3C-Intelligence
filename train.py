@@ -261,9 +261,9 @@ def train_model(df, X_scaled, scaler, k_clusters):
     
     # Save model and scaler objects to filesystem
     import pickle
-    os.makedirs('data', exist_ok=True)
-    model_path = 'data/kmeans_model.pkl'
-    scaler_path = 'data/scaler.pkl'
+    os.makedirs('models', exist_ok=True)
+    model_path = 'models/kmeans_model.pkl'
+    scaler_path = 'models/scaler.pkl'
     
     with open(model_path, 'wb') as f:
         pickle.dump(kmeans, f)
@@ -315,10 +315,10 @@ def analyze_and_map_risk(df, centroid_df):
     
     # Save risk mapping metadata JSON
     import json
-    os.makedirs('data', exist_ok=True)
-    with open('data/model_metadata.json', 'w') as f:
+    os.makedirs('models', exist_ok=True)
+    with open('models/model_metadata.json', 'w') as f:
         json.dump({str(k): v for k, v in risk_mapping.items()}, f)
-    print("Saved risk mapping metadata to 'data/model_metadata.json'")
+    print("Saved risk mapping metadata to 'models/model_metadata.json'")
     
     # Compute Crime Score for all individual cities too for reporting ranking
     df['Crime Score'] = (

@@ -49,6 +49,21 @@
             </nav>
 
             <div class="header-actions">
+                <a href="/api/download-pdf" class="download-pdf-btn" id="downloadPdfBtn" title="Download Case Study PDF" download>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span class="btn-text">Case Study PDF</span>
+                </a>
+                <a href="/api/download-showcase" class="download-pdf-btn" id="downloadShowcaseBtn" title="Download Fiverr Portfolio PDF" style="background: var(--c-emerald);" download>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    <span class="btn-text">Fiverr Portfolio PDF</span>
+                </a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" type="button">
                     <!-- Sun icon -->
                     <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -66,6 +81,10 @@
             <a href="#visualization" class="mobile-nav-item" id="mnav-analytics">Analytics</a>
             <a href="#rankings" class="mobile-nav-item" id="mnav-rankings">Rankings</a>
             <a href="#insights" class="mobile-nav-item" id="mnav-methodology">Methodology</a>
+            <a href="/api/download-pdf" class="mobile-nav-item" id="mnav-download" style="color: var(--c-indigo); font-weight: 600;" download>Download Case Study PDF</a>
+            <a href="/api/download-showcase" class="mobile-nav-item" id="mnav-showcase" style="color: var(--c-emerald); font-weight: 600;" download>Download Fiverr Portfolio PDF</a>
+            <a href="/api/download-visual" class="mobile-nav-item" id="mnav-visual" style="color: var(--c-amber); font-weight: 600;" download>Download Fiverr Visual PDF</a>
+            <a href="/api/download-preview" class="mobile-nav-item" id="mnav-preview" style="color: var(--c-text-3); font-weight: 500;" download>Download UI Preview PDF</a>
         </div>
     </header>
 
@@ -102,6 +121,10 @@
                         <a href="#overview" class="cta-primary" id="cta-primary-hero">
                             <span>Explore the dashboard</span>
                             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="10" x2="16" y2="10"/><polyline points="11 5 16 10 11 15"/></svg>
+                        </a>
+                        <a href="/api/download-visual" class="cta-ghost" id="cta-preview-hero" style="border-color: var(--c-amber); color: var(--c-amber-light);" download>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; margin-right: 6px; display: inline-block; vertical-align: middle;" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <span>Fiverr Visual PDF</span>
                         </a>
                         <a href="#insights" class="cta-ghost" id="cta-ghost-hero">View methodology</a>
                     </div>
